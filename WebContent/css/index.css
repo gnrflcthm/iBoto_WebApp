@@ -1,0 +1,57 @@
+
+ html, body {
+    font-family: 'Montserrat', sans-serif;
+    color: #260383;
+	background: #eee;
+}
+
+.navbar-brand, .nav-link {
+    color: #260383 !important;
+}
+
+.logo {
+    font-size: 1.5rem;
+}
+
+.content {
+    padding: 0 2rem;
+    height: 85vh;
+}
+
+.nav-container {
+    z-index: 10000;
+}
+
+.scrolled-nav {    
+    background: #260383 !important;
+    transition: all 0.1s linear;
+}
+
+.scrolled-nav-item {
+    color: #fff !important;
+    transition: all 0.1s linear;
+}
+
+.scrolled-login {
+    background: #fff !important;
+    color: #4400ff !important;
+    transition: all 0.1s linear;
+}
+
+.scrolled-login:hover {
+    background: #1f0074 !important;
+    color: #fff !important;
+    border: 1px solid #fff !important;
+    transition: all 0.1s linear;
+}
+
+.btn {
+    background: #260383;
+    color: #fff;
+}
+
+.btn:hover {
+    background: #fff;
+    border: 1px solid #555;
+    color: #260383;
+}

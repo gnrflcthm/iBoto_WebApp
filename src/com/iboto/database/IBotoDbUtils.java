@@ -24,7 +24,7 @@ public class IBotoDbUtils {
 		this.PASSWORD = context.getInitParameter("password");
 	}
 	
-	public boolean addUser(String email, String phoneNum, String lastName, String firstName, Date birthday, City address, int district, String password) {
+	public boolean addUser(String email, String phoneNum, String lastName, String firstName, String birthday, City address, int district, String password) {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			conn = DriverManager.getConnection(URL, USER, PASSWORD);
@@ -37,7 +37,7 @@ public class IBotoDbUtils {
 			s.setString(3, phoneNum);
 			s.setString(4, lastName);
 			s.setString(5, firstName);
-			s.setDate(6, birthday);
+			s.setString(6, birthday);
 			s.setString(7, address.getProperName());
 			s.setInt(8, district);
 			s.setString(9, pwd[0]);

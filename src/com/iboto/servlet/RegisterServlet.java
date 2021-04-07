@@ -41,22 +41,12 @@ public class RegisterServlet extends HttpServlet {
 		String phoneNum = request.getParameter("phoneNum");
 		String lastName = request.getParameter("lname");
 		String firstName = request.getParameter("fname");
-		Date birthday = parseDate(request.getParameter("birthday"));
+		String birthday = request.getParameter("birthday");
 		City address = City.valueOf(request.getParameter("city"));
 		int district = Integer.valueOf(request.getParameter("district"));
 		String password = request.getParameter("password");
 		
 		db.addUser(email, phoneNum, lastName, firstName, birthday, address, district, password);
 		response.sendRedirect("home.jsp");
-	}
-	
-	private Date parseDate(String date) {
-		int[] data = Stream.of(date.split("-")).mapToInt((x) -> Integer.valueOf(x)).toArray();
-		return new Date(data[0], data[1], data[2]);
-	}
-	
-	public static void main(String[] args) {
-		String password = "password";
-		String[] passwordHash = HashUtils.hash(password);
 	}
 }

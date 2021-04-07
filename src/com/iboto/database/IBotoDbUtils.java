@@ -53,7 +53,7 @@ public class IBotoDbUtils {
 	
 	private String generateUserID(City city) throws SQLException {
 		StringBuilder userID = new StringBuilder();
-		userID.append(city.getCityCode() + "C");
+		userID.append(city.getCityCode() + "V");
 		ResultSet res = conn.createStatement().executeQuery("SELECT COUNT(*) FROM voter");
 		res.next();
 		int userCount = res.getInt(1);

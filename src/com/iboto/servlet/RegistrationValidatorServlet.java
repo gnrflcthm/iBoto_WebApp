@@ -19,7 +19,7 @@ import com.iboto.constants.City;
 @WebServlet({"/regvalidate.jsp" })
 public class RegistrationValidatorServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+    
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -77,7 +77,6 @@ public class RegistrationValidatorServlet extends HttpServlet {
 		} else {
 			return true;
 		}
-		
 	}
 	
 	private boolean validatePassword(HttpServletRequest req) {

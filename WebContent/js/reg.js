@@ -9,13 +9,7 @@ $(document).ready(function() {
             $(".name").show();
             citySelect = true;
         } else {
-            $("#validate").prop("disabled", false);
-            $(".complete-registration").hide();
-            $("#district-select").prop("disabled", false);
-            $(".name-field").prop("disabled", false);
-            $(".name-field").removeClass("is-valid");
-            $("#validate").show();
-            clearCompleteReg();
+        	resetForm();
         }
     });
     $("#validate").click(function() {
@@ -28,10 +22,7 @@ $(document).ready(function() {
         	type: "POST",
         	data: {"validate": 0, "fname": firstName, "mname": middleName, "lname": lastName, "city": city},
         	beforeSend: function() {
-        		$(this).prop("disabled", true);
-        		$(this).html(
-        				`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...`
-        		);
+        		$(this).hide();
         	},
         	success: function(res, status) {
         		if (res['valid']) {
@@ -40,6 +31,7 @@ $(document).ready(function() {
         			$("#validate").hide();
         			$(".complete-registration").show();
         			var district = $("#district-select");
+        			district.empty();
         			for (let i = 1; i <= res["district_count"]; i++) {
         				district.append(`<option value='${i}'>${i}</option>`);
         			}
@@ -54,36 +46,59 @@ $(document).ready(function() {
         });
         
     });
-    $("form").submit(function(e) {
-        let password = validatePassword();
-        let birthday = validateBirthday();
-        e.preventDefault();
+    $("#register").click(function() {
+    	var bday = $("input[type=date]")[0].value;
+    	var pwd = $("#pwd").val();
+    	var cnpwd = $("#cnpwd").val();
+        $.ajax({
+        	url: "regvalidate.jsp",
+        	method: "POST",
+        	data: {"validate": 1, "bday": bday, "pwd": pwd, "cnpwd": cnpwd},
+        	beforeSend: function() {
+        		
+        	},
+        	success: function(data, status) {
+        		if (data['birthday']) {
+        			$(".bday").prop("disabled", true);
+        			$(".bday").addClass("is-valid");
+        			$(".bday").removeClass("is-invalid");
+        		} else {
+        			$(".bday").removeClass("is-valid");
+        			$(".bday").addClass("is-invalid");
+        		}
+        		if (data['password']) {
+        			$(".pwd").prop("disabled", true);
+        			$(".pwd").addClass("is-valid");
+        			$(".pwd").removeClass("is-invalid");
+        		} else {
+        			$(".pwd").removeClass("is-valid");
+        			$(".pwd").addClass("is-invalid");
+        		}
+        	},
+        	error: function(xhr, status, error) {
+        		alert("error")
+        	},
+        	complete: function(xhr, status) {
+        		$("#regForm").submit();
+        	}
+        });
     });
 });
 
-function validFields(fields) {
-    for (let i = 0; i < fields.length; i++) {
-        if (fields[i].classList.contains("is-invalid")) {
-            return false;
-        } 
-    }
-    return true;
-}
-
-function validatePassword() {
-    let passFields = $(".pwd");
-    return passFields[0].value === passFields[1].value; 
-}
-
-function validateBirthday() {
-    let birthday = $("input[type=date]")[0].value;
-    console.log(birthday);
-}
-
-function clearCompleteReg() {
-    $(".bday").val("");
-    $("#district-select").val("");
-    $(".pwd").val("");
-    $("#email").val("");
-    $("#phoneNum").val("");
+function resetForm() {
+	$(".name-field").prop("disabled", false);
+	$(".name-field").removeClass("is-valid");
+	$(".name-field").removeClass("is-invalid");
+	$("#validate").show();
+	$(".pwd").prop("disabled", false);
+	$(".pwd").removeClass("is-valid");
+	$(".pwd").removeClass("is-invalid");
+	$(".pwd").val("");
+	$("#email").val("");
+	$("#phoneNum").val("");
+	$("input[type=date]")[0].value = 0;
+	$("input[type=date]").prop("disabled", false);
+	$("input[type=date]").removeClass("is-valid");
+	$("input[type=date]").removeClass("is-invalid");
+	$(".complete-registration").hide();
 }

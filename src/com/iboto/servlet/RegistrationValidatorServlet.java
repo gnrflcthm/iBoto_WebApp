@@ -2,6 +2,8 @@ package com.iboto.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDate;
+import java.util.stream.Stream;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,7 +16,7 @@ import com.iboto.constants.City;
 /**
  * Servlet implementation class RegistrationValidatorServlet
  */
-@WebServlet({ "/RegistrationValidatorServlet", "/regvalidate.jsp" })
+@WebServlet({"/regvalidate.jsp" })
 public class RegistrationValidatorServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -28,12 +30,12 @@ public class RegistrationValidatorServlet extends HttpServlet {
     
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int segment = Integer.valueOf(request.getParameter("validate"));
+		PrintWriter out = response.getWriter();
+		response.setContentType("application/json");
 		switch(segment) {
 			case 0:
 				String city = request.getParameter("city");
 				int districtCount = City.valueOf(city).getDistrictCount();
-				PrintWriter out = response.getWriter();
-				response.setContentType("application/json");
 				if (validateName(request)) {
 					out.println(String.format("{\"valid\": true, \"district_count\": %d}", districtCount));
 					out.flush();
@@ -41,8 +43,14 @@ public class RegistrationValidatorServlet extends HttpServlet {
 					out.println("{\"valid\": false}");
 					out.flush();
 				}
+				break;
+			case 1:
+				boolean validBirthday = validateBirthday(request);
+				boolean validPassword = validatePassword(request);
+				out.println(String.format("{\"birthday\": %s, \"password\": %s}", validBirthday, validPassword));
+				out.flush();
+				break;
 		}
-		
 	}
 	
 	private boolean validateName(HttpServletRequest req) {
@@ -50,6 +58,42 @@ public class RegistrationValidatorServlet extends HttpServlet {
 		String mName = req.getParameter("mname").strip();
 		String lName = req.getParameter("lname").strip();
 		return fName.length() > 0 && mName.length() > 0 && lName.length() > 0;
+	}
+	
+	private boolean validateBirthday(HttpServletRequest req) {
+		if (req.getParameter("bday").equals("") || req.getParameter("bday") == null) {
+			return false;
+		}
+		int[] date = Stream.of(req.getParameter("bday").split("-")).mapToInt((x) -> Integer.valueOf(x)).toArray();
+		LocalDate birthday = LocalDate.of(date[0], date[1], date[2]);
+		int age = LocalDate.now().getYear() - birthday.getYear();
+		if (LocalDate.now().getMonthValue() <= birthday.getMonthValue()) {
+			if (LocalDate.now().getDayOfMonth() < birthday.getDayOfMonth()) {
+				age -= 1;
+			}
+		}
+		if (age < 18) {
+			return false;
+		} else {
+			return true;
+		}
+		
+	}
+	
+	private boolean validatePassword(HttpServletRequest req) {
+		String pwd = req.getParameter("pwd");
+		String cnpwd = req.getParameter("cnpwd");
+		int ucase = countUppercase(pwd);
+		return (pwd.length() > 6 && pwd.equals(cnpwd) && ucase > 0);
+	}
+	
+	private int countUppercase(String text) {
+		char[] temp = text.toCharArray();
+		int upperCount = 0;
+		for (char x : temp) {
+			upperCount += (Character.isUpperCase(x)) ? 1 : 0;
+		}
+		return upperCount;
 	}
 
 }

@@ -6,7 +6,7 @@ $(document).ready(function() {
     $(".complete-registration").hide();
     $("#city-select").change(function() {
         if (!citySelect) {
-            $(".name").show();
+            $(".name").show(500);
             citySelect = true;
         } else {
         	resetForm();
@@ -22,21 +22,25 @@ $(document).ready(function() {
         	type: "POST",
         	data: {"validate": 0, "fname": firstName, "mname": middleName, "lname": lastName, "city": city},
         	beforeSend: function() {
-        		$(this).hide();
+        		$(this).hide(500);
         	},
         	success: function(res, status) {
         		if (res['valid']) {
-        			$(".name-field").prop("disabled", true);
+        			$(".name-field").prop("readonly", true);
         			$(".name-field").addClass("is-valid");
-        			$("#validate").hide();
-        			$(".complete-registration").show();
+        			$("#validate").hide(500);
+        			$(".complete-registration").show(500);
         			var district = $("#district-select");
         			district.empty();
-        			for (let i = 1; i <= res["district_count"]; i++) {
+        			for (let i = 0; i <= res["district_count"]; i++) {
+        				if (i === 0) {
+        					district.append(`<option value="0" selected disabled hidden></option>`);
+        					continue;
+        				}
         				district.append(`<option value='${i}'>${i}</option>`);
         			}
         			if (res["district_count"] == 1) {
-        				district.prop("disabled", true);
+        				district.prop("readonly", true);
         			}
         		}
         	},
@@ -50,6 +54,7 @@ $(document).ready(function() {
     	var bday = $("input[type=date]")[0].value;
     	var pwd = $("#pwd").val();
     	var cnpwd = $("#cnpwd").val();
+    	var complete;
         $.ajax({
         	url: "regvalidate.jsp",
         	method: "POST",
@@ -58,8 +63,9 @@ $(document).ready(function() {
         		
         	},
         	success: function(data, status) {
+        		complete = data['birthday'] && data['password'];
         		if (data['birthday']) {
-        			$(".bday").prop("disabled", true);
+        			$(".bday").prop("readonly", true);
         			$(".bday").addClass("is-valid");
         			$(".bday").removeClass("is-invalid");
         		} else {
@@ -67,7 +73,7 @@ $(document).ready(function() {
         			$(".bday").addClass("is-invalid");
         		}
         		if (data['password']) {
-        			$(".pwd").prop("disabled", true);
+        			$(".pwd").prop("readonly", true);
         			$(".pwd").addClass("is-valid");
         			$(".pwd").removeClass("is-invalid");
         		} else {
@@ -79,26 +85,28 @@ $(document).ready(function() {
         		alert("error")
         	},
         	complete: function(xhr, status) {
-        		$("#regForm").submit();
+                if (complete) {
+                	$("#regForm").submit();
+                }
         	}
         });
     });
 });
 
 function resetForm() {
-	$(".name-field").prop("disabled", false);
+	$(".name-field").prop("readonly", false);
 	$(".name-field").removeClass("is-valid");
 	$(".name-field").removeClass("is-invalid");
-	$("#validate").show();
-	$(".pwd").prop("disabled", false);
+	$("#validate").show(500);
+	$(".pwd").prop("readonly", false);
 	$(".pwd").removeClass("is-valid");
 	$(".pwd").removeClass("is-invalid");
 	$(".pwd").val("");
 	$("#email").val("");
 	$("#phoneNum").val("");
 	$("input[type=date]")[0].value = 0;
-	$("input[type=date]").prop("disabled", false);
+	$("input[type=date]").prop("readonly", false);
 	$("input[type=date]").removeClass("is-valid");
 	$("input[type=date]").removeClass("is-invalid");
-	$(".complete-registration").hide();
+	$(".complete-registration").hide(500);
 }

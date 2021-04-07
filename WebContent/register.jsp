@@ -20,7 +20,7 @@
                         <div class="card-title mb-2">
                             <h3>Logo</h3>
                         </div>
-                        <form action="home.jsp" method="POST" id="regForm" accept-charset="utf-8">
+                        <form action="${pageContext.request.contextPath}/register" method="POST" id="regForm" accept-charset="utf-8">
                             <div class="row">
                                 <div class="col">
                                     <div class="card-title mb-2">
@@ -51,34 +51,31 @@
                                     <button type="button" class="btn w-100" id="validate">Validate</button>
                                 </div>
                             </div>
-                            <div class="my-3 complete-registration">
-                                <div class="row">
-                                    <div class="col-12 col-md-6">
-                                        <div class="card-title my-3">Enter Your Birthday</div>
-                                        <input type="date" name="birthday" id="bday" class="bday form-control" placeholder="Birthday" autocomplete="off" />
-                                        <div class="card-title my-3">Select Your District</div>
-                                        <select name="district" id="district-select" class="form-control">
-                                            
-                                        </select>
-                                    </div>
-                                    <div class=" col-12 col-md-6">
-                                        <div class="card-title my-3">Enter Your Password</div>
-                                        <input type="password" name="password" id="pwd" class="pwd form-control my-3" placeholder="Password" autocomplete="off" />
-                                        <input type="password" name="password" id="cnpwd" class="pwd form-control my-3" placeholder="Confirm Password" autocomplete="off" />
-                                    </div>
+                            <div class="row complete-registration">
+                                <div class="col-12 col-md-6 form-group">
+                                    <div class="card-title my-3">Enter Your Birthday</div>
+                                    <input type="date" name="birthday" id="bday" class="bday form-control" placeholder="Birthday" autocomplete="off" />
+                                    <div class="card-title my-3">Select Your District</div>
+                                    <select name="district" id="district-select" class="form-control">
+                                    </select>
                                 </div>
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="card-title my-3">Enter Your Email(Optional)</div>
-                                        <input type="text" name="email" id="email" class="form-control" placeholder="Email" autocomplete="off" />
-                                    </div>
-                                    <div class="col">
-                                        <div class="card-title my-3">Enter Your Phone Number(Optional)</div>
-                                        <input type="text" name="phoneNum" id="phoneNum" class="form-control my-3" placeholder="Phone Number" autocomplete="off" />
-                                    </div>
+                                <div class=" col-12 col-md-6 form-group">
+                                    <div class="card-title my-3">Enter Your Password</div>
+                                    <input type="password" name="password" id="pwd" class="pwd form-control my-3" placeholder="Password" autocomplete="off" />
+                                    <input type="password" name="password" id="cnpwd" class="pwd form-control my-3" placeholder="Confirm Password" autocomplete="off" />
                                 </div>
-                                <button type="button" class="btn w-100" id="register">Sign Up</button>
                             </div>
+                            <div class="row complete-registration">
+                                <div class="col">
+                                    <div class="card-title my-3">Enter Your Email(Optional)</div>
+                                    <input type="text" name="email" id="email" class="form-control" placeholder="Email" autocomplete="off" />
+                                </div>
+                                <div class="col">
+                                    <div class="card-title my-3">Enter Your Phone Number(Optional)</div>
+                                    <input type="text" name="phoneNum" id="phoneNum" class="form-control my-3" placeholder="Phone Number" autocomplete="off" />
+                                </div>
+                            </div>
+                            <button type="button" class="btn w-100 complete-registration" id="register">Sign Up</button>
                         </form>
                     </div>
                 </div>

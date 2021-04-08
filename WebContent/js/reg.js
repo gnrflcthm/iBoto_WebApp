@@ -65,7 +65,6 @@ $(document).ready(function() {
         		
         	},
         	success: function(data, status) {
-        		console.log(data);
         		complete = data['birthday'] && data['password'] && 
         				   data['email'] && data['phoneNum'];
         		if (data['birthday']) {

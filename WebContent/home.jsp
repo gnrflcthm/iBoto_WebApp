@@ -33,7 +33,7 @@
                         <p class="card-text text-dark">
                             Sign In Here
                         </p>
-                        <form action="login.jsp" method="POST">
+                        <form action="${pageContext.request.contextPath}/login" method="POST">
                             <div class="form-group my-3">
                                 <input type="text" name="id" id="" class="form-control" placeholder="Email or VoterID" autocomplete="off">
                             </div>

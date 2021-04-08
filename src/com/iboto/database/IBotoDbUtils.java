@@ -52,12 +52,22 @@ public class IBotoDbUtils {
 	}
 	
 	private String generateUserID(City city) throws SQLException {
-		StringBuilder userID = new StringBuilder();
-		userID.append(city.getCityCode() + "V");
-		ResultSet res = conn.createStatement().executeQuery("SELECT COUNT(*) FROM voter");
+		ResultSet res = conn.createStatement().executeQuery("SELECT COUNT(*) FROM voter WHERE UserID LIKE '" + city.getCityCode() + "%'");
 		res.next();
 		int userCount = res.getInt(1);
-		userID.append(String.format("%06d", userCount));
-		return userID.toString();
+		return generateID(city, "V", userCount);
+	}
+	
+	/**
+	 * Generic method for generating IDs
+	 * @param city uses city code as prefix for the generated ID.
+	 * @param type string literal for id type ("V" - voter, "C" - candidate, "AD" - admin)
+	 * @param count total records based on table records
+	 * @return generated ID based on input parameters
+	 */
+	private String generateID(City city, String type, int count) {
+		StringBuilder id = new StringBuilder();
+		id.append(city.getCityCode() + type + String.format("%06d", count));
+		return id.toString();
 	}
 }

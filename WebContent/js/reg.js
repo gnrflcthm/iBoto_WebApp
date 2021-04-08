@@ -54,16 +54,20 @@ $(document).ready(function() {
     	var bday = $("input[type=date]")[0].value;
     	var pwd = $("#pwd").val();
     	var cnpwd = $("#cnpwd").val();
+    	var email = $("#email").val();
+    	var phoneNum = $("#phoneNum").val();
     	var complete;
         $.ajax({
         	url: "regvalidate.jsp",
         	method: "POST",
-        	data: {"validate": 1, "bday": bday, "pwd": pwd, "cnpwd": cnpwd},
+        	data: {"validate": 1, "bday": bday, "pwd": pwd, "cnpwd": cnpwd, "email": email, "phoneNum": phoneNum},
         	beforeSend: function() {
         		
         	},
         	success: function(data, status) {
-        		complete = data['birthday'] && data['password'];
+        		console.log(data);
+        		complete = data['birthday'] && data['password'] && 
+        				   data['email'] && data['phoneNum'];
         		if (data['birthday']) {
         			$(".bday").prop("readonly", true);
         			$(".bday").addClass("is-valid");
@@ -79,6 +83,20 @@ $(document).ready(function() {
         		} else {
         			$(".pwd").removeClass("is-valid");
         			$(".pwd").addClass("is-invalid");
+        		}
+        		if (data['email']) {
+        			$("#email").addClass("is-valid");
+        			$("#email").removeClass("is-invalid");
+        		} else {
+        			$("#email").removeClass("is-valid");
+        			$("#email").addClass("is-invalid");
+        		}
+        		if (data['phoneNum']) {
+        			$("#phoneNum").addClass("is-valid");
+        			$("#phoneNum").removeClass("is-invalid");
+        		} else {
+        			$("#phoneNum").removeClass("is-valid");
+        			$("#phoneNum").addClass("is-invalid");
         		}
         	},
         	error: function(xhr, status, error) {

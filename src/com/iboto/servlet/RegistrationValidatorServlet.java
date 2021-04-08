@@ -47,7 +47,9 @@ public class RegistrationValidatorServlet extends HttpServlet {
 			case 1:
 				boolean validBirthday = validateBirthday(request);
 				boolean validPassword = validatePassword(request);
-				out.println(String.format("{\"birthday\": %s, \"password\": %s}", validBirthday, validPassword));
+				boolean validEmail    = validateEmail(request);
+				boolean validPhoneNum = validatePhoneNum(request);
+				out.println(String.format("{\"birthday\": %s, \"password\": %s, \"email\": %s, \"phoneNum\": %s}", validBirthday, validPassword, validEmail, validPhoneNum));
 				out.flush();
 				break;
 		}
@@ -94,5 +96,22 @@ public class RegistrationValidatorServlet extends HttpServlet {
 		}
 		return upperCount;
 	}
-
+	
+	private boolean validateEmail(HttpServletRequest req) {
+		String email = req.getParameter("email");
+		if (email.equals("")) {
+			return true;
+		} else {
+			return email.matches(".+@.+");
+		}
+	}
+	
+	private boolean validatePhoneNum(HttpServletRequest req) {
+		String phoneNum = req.getParameter("phoneNum");
+		if (phoneNum.equals("")) {
+			return true;
+		} else {
+			return phoneNum.matches("(\\d{11}|\\+63\\d{10})");
+		}
+	}
 }

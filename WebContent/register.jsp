@@ -68,7 +68,7 @@
                             <div class="row complete-registration">
                                 <div class="col">
                                     <div class="card-title my-3">Enter Your Email(Optional)</div>
-                                    <input type="text" name="email" id="email" class="form-control" placeholder="Email" autocomplete="off" />
+                                    <input type="email" name="email" id="email" class="form-control" placeholder="Email" autocomplete="off" />
                                 </div>
                                 <div class="col">
                                     <div class="card-title my-3">Enter Your Phone Number(Optional)</div>

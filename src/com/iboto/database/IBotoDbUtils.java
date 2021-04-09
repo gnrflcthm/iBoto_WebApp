@@ -5,10 +5,12 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 import javax.servlet.ServletContext;
 
 import com.iboto.constants.City;
+import com.iboto.models.UserBean;
 import com.thiam.encryption.HashUtils;
 
 public class IBotoDbUtils {
@@ -27,6 +29,32 @@ public class IBotoDbUtils {
 	
 	public static IBotoDbUtils getInstance(ServletContext context) {
 		return new IBotoDbUtils(context);
+	}
+	
+	public UserBean getUserInstance(String id) {
+		UserBean user;
+		try {
+			if (connect()) {
+				PreparedStatement s = conn.prepareStatement("SELECT * FROM voter WHERE UserID = ? OR Email = ?");
+				s.setString(1, id);
+				s.setString(2, id);
+				ResultSet res = s.executeQuery();
+				res.next();
+				String userID = res.getString("UserID");
+				String email = res.getString("Email");
+				String phoneNum = res.getString("PhoneNumber");
+				String lastName = res.getString("LastName");
+				String firstName = res.getString("FirstName");
+				LocalDate birthday = LocalDate.parse(res.getString("DateOfBirth"));
+				City cityAddress = City.getByProperName(res.getString("Address"));
+				int district = res.getInt("District");
+				user = UserBean.getInstance(userID, email, phoneNum, lastName, firstName, birthday, cityAddress, district);
+				return user;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	public boolean addUser(String email, String phoneNum, String lastName, String firstName, String birthday, City address, int district, String password) {

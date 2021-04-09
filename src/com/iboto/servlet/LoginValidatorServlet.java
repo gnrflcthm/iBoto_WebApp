@@ -23,6 +23,13 @@ public class LoginValidatorServlet extends HttpServlet {
 		db = IBotoDbUtils.getInstance(this.getServletContext());
 	}
 
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		resp.sendRedirect(this.getServletContext().getContextPath() + "/home");
+	}
+
+
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String user = request.getParameter("id");
 		String pass = request.getParameter("password");

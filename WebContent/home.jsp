@@ -1,5 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%
+	String header = response.getHeader("invalidLogin");
+	boolean invalidCredentials = true;
+	if (header != null) {
+		try {
+			invalidCredentials = Boolean.getBoolean(header);
+		} catch (Exception e) {
+			out.println(e);
+		}
+	}
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,6 +45,13 @@
                             Sign In Here
                         </p>
                         <form action="${pageContext.request.contextPath}/login" method="POST">
+                        	<%
+                        		if (!invalidCredentials) {
+                        	%>
+                        			<small class="text-danger">Invalid Login Credentials</small>
+                        	<%
+                        		}
+                        	%>
                             <div class="form-group my-3">
                                 <input type="text" name="id" id="" class="form-control" placeholder="Email or VoterID" autocomplete="off">
                             </div>

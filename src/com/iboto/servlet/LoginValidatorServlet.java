@@ -3,6 +3,7 @@ package com.iboto.servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,13 +26,16 @@ public class LoginValidatorServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String user = request.getParameter("id");
 		String pass = request.getParameter("password");
+		
+		RequestDispatcher rd;
 
 		boolean login = db.validateUserLogin(user, pass);
-		PrintWriter pw = response.getWriter();
 		if (login) {
-			pw.println("Login Successfully");
+			response.getWriter().println("Login Successfully");
 		} else {
-			pw.println("Invalid Credentials");
+			response.addHeader("invalidLogin", "true");
+			rd = request.getRequestDispatcher("home.jsp");
+			rd.forward(request, response);
 		}
 		
 	}

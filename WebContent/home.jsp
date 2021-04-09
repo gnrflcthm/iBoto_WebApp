@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ page session="false"%>
 <%
 	String header = response.getHeader("invalidLogin");
 	boolean invalidCredentials = true;
@@ -32,7 +33,7 @@
                         <p class="card-text text-dark">
                             Sign Up now to vote anytime and anywhere you like.
                         </p>
-                        <a href="register.jsp" class="btn btn-primary">Sign Up</a>
+                        <a href="register.jsp" class="btn">Sign Up</a>
                     </div>
                 </div>
             </div>
@@ -58,7 +59,7 @@
                             <div class="form-group my-3">
                                 <input type="password" name="password" id="" class="form-control" placeholder="Password">
                             </div>
-                            <input type="submit" class="btn btn-primary w-100" value="Sign In">
+                            <input type="submit" class="btn w-100" value="Sign In">
                         </form>
                     </div>
                 </div>

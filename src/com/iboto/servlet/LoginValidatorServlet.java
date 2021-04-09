@@ -1,7 +1,6 @@
 package com.iboto.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,8 +8,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import com.iboto.database.IBotoDbUtils;;
+import com.iboto.database.IBotoDbUtils;
+import com.iboto.models.UserBean;
 /**
  * Servlet implementation class LoginValidatorServlet
  */
@@ -38,7 +39,12 @@ public class LoginValidatorServlet extends HttpServlet {
 
 		boolean login = db.validateUserLogin(user, pass);
 		if (login) {
-			response.getWriter().println("Login Successfully");
+			UserBean userBean = db.getUserInstance(user);
+			HttpSession session = request.getSession(true);
+			if (userBean != null) {
+				session.setAttribute("userBean", userBean);
+				response.sendRedirect(this.getServletContext().getContextPath() + "/home");
+			}
 		} else {
 			response.addHeader("invalidLogin", "true");
 			rd = request.getRequestDispatcher("home.jsp");

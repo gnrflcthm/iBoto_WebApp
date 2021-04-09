@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.iboto.models.UserBean;
+
 public class HomeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -30,9 +32,12 @@ public class HomeServlet extends HttpServlet {
 			rd = request.getRequestDispatcher("home.jsp");
 			rd.forward(request, response);
 		} else {
-			String userID = (String) session.getAttribute("userID");
-			if (userID == null) {
+			UserBean userBean = (UserBean) session.getAttribute("userBean");
+			if (userBean == null) {
 				rd = request.getRequestDispatcher("home.jsp");
+				rd.forward(request, response);
+			} else {
+				rd = request.getRequestDispatcher("userhome.jsp");
 				rd.forward(request, response);
 			}
 		}

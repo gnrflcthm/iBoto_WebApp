@@ -175,5 +175,13 @@ public enum City {
 		return this.councilorCount;
 	}
 	
+	public static City getByProperName(String properName) {
+		for (City city : City.values()) {
+			if (city.getProperName().equals(properName)) {
+				return city;
+			}
+		}
+		return null;
+	}
 	
 }

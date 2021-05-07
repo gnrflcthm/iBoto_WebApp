@@ -1,0 +1,87 @@
+body {
+            height: 100vh;
+            background: #ddd !important;
+        }
+
+        .h1 {
+            color: #260383;
+        }
+
+        .navbar {
+            background: #260383;
+        }
+        
+        .nav-link {
+            color: #fff !important;
+        }
+
+        .nav-link:hover {
+            box-shadow: 0 0 0 0.5px #fff inset;
+            transition: all 50ms ease-in-out;
+        }
+
+        .sign-out:hover {
+            background: #F92658;
+            box-shadow: none;
+            color: #fff;
+        }
+
+        .active {
+            background: #fff !important;
+            color: #260383 !important;
+            font-weight: bold;
+        }
+
+        .btn {
+            background: #260383;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .content-title {
+            background: #260383;
+            color: #fff;
+        }
+
+        .rad {
+            background: none !important;
+            color: #260383;
+            border: 1px solid #260383;
+        }
+
+        .rad:hover {
+            border: 1px solid;
+            background: #260383 !important;
+            color: #fff;
+        }
+
+        .card-img-top {
+            height: 250px !important;
+        }
+
+        .selected {
+            border: 1px solid;
+            background: #260383 !important;
+            color: #fff;
+        }
+
+        .overlay {
+            position: absolute;
+            background-color: #ccc;
+            height: 100%;
+            width: 100%;
+            top: 0;
+            bottom: 0;
+            opacity: 0.75;
+            z-index: 100000;
+            display: flex;
+            justify-content: center;
+        }
+
+        .content-box {
+            -ms-overflow-style: none;  
+            scrollbar-width: none;  
+        }
+        .content-box::-webkit-scrollbar { 
+            display: none;  
+        }

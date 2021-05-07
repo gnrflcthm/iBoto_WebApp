@@ -175,6 +175,7 @@ public enum City {
 		return this.councilorCount;
 	}
 	
+	// Locates and returns the city according to its Proper Name
 	public static City getByProperName(String properName) {
 		for (City city : City.values()) {
 			if (city.getProperName().equals(properName)) {

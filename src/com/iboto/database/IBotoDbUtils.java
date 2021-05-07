@@ -31,6 +31,12 @@ public class IBotoDbUtils {
 		return new IBotoDbUtils(context);
 	}
 	
+	/**
+	 * Retrieves user data from the database according to the input ID
+	 * then creates and returns an instance of User Bean
+	 * @param id user ID or email
+	 * @return UserBean representing a user
+	 */
 	public UserBean getUserInstance(String id) {
 		UserBean user;
 		try {
@@ -57,6 +63,19 @@ public class IBotoDbUtils {
 		return null;
 	}
 	
+	/**
+	 * Inserts a new User to the database using the given information.
+	 * @param email 
+	 * @param phoneNum
+	 * @param lastName
+	 * @param firstName
+	 * @param birthday
+	 * @param address
+	 * @param district
+	 * @param password
+	 * @return true if user has been successfully added  to the database 
+	 * 		   otherwise false
+	 */
 	public boolean addUser(String email, String phoneNum, String lastName, String firstName, String birthday, City address, int district, String password) {
 		try {
 			if (connect()) {	
@@ -93,6 +112,13 @@ public class IBotoDbUtils {
 		return true;
 	}
 	
+	/**
+	 * Validates if the input userID or email, and password are valid
+	 * @param user user ID or email
+	 * @param password password
+	 * @return true if user exists and password matches the given password
+	 *    	   otherwise false if user does not exist or password is incorrect
+	 */
 	public boolean validateUserLogin(String user, String password) {
 		String[] pwd = new String[2];
 		try {
@@ -119,6 +145,12 @@ public class IBotoDbUtils {
 		return HashUtils.validateText(pwd[0], password, pwd[1]);
 	}
 	
+	/**
+	 * Generates UserID based on the users city address.
+	 * @param city City Address
+	 * @return UserID
+	 * @throws SQLException
+	 */
 	private String generateUserID(City city) throws SQLException {
 		ResultSet res = conn.createStatement().executeQuery("SELECT COUNT(*) FROM voter WHERE UserID LIKE '" + city.getCityCode() + "%'");
 		res.next();
@@ -142,6 +174,10 @@ public class IBotoDbUtils {
 		return id.toString();
 	}
 	
+	/**
+	 * Establishes connection with database using the given credentials.
+	 * @return true if connection is established without errors otherwise false
+	 */
 	private boolean connect() {
 		try {		
 			Class.forName(DRIVER);
@@ -153,6 +189,11 @@ public class IBotoDbUtils {
 		return true;
 	}
 	
+	/**
+	 * Disconnects the database.
+	 * @return true if database disconnected successfully otherwise false.
+	 * @throws SQLException
+	 */
 	public boolean disconnect() throws SQLException {
 		if (conn != null && !conn.isClosed()) {
 			conn.close();

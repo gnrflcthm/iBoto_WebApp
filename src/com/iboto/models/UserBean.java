@@ -93,6 +93,18 @@ public class UserBean {
 		this.district = district;
 	}
 	
+	/**
+	 * Creates and returns an instance of UserBean given the parameters.
+	 * @param userID
+	 * @param email
+	 * @param phoneNum
+	 * @param lastName
+	 * @param firstName
+	 * @param birthday
+	 * @param cityAddress
+	 * @param district
+	 * @return UserBean instance.
+	 */
 	public static UserBean getInstance(String userID, String email, String phoneNum, String lastName, String firstName, LocalDate birthday,
 			City cityAddress, int district) {
 		return new UserBean(userID, email, phoneNum, lastName, firstName, birthday, cityAddress, district);

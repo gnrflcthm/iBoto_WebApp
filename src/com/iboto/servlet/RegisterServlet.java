@@ -23,19 +23,13 @@ import com.thiam.encryption.HashUtils;
 public class RegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
     public RegisterServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		String middleName;		
+    
+    // Handles user registration and insertion to database, then redirects back to home page.
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
 		IBotoDbUtils db = new IBotoDbUtils(this.getServletContext());
 		String email = request.getParameter("email");
 		String phoneNum = request.getParameter("phoneNum");

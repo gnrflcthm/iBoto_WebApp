@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.iboto.constants.City;
 
-/**
- * Servlet implementation class RegistrationValidatorServlet
+/*
+ * Class is designed to handle validations during registration.
  */
 @WebServlet({"/regvalidate.jsp" })
 public class RegistrationValidatorServlet extends HttpServlet {
@@ -29,10 +29,13 @@ public class RegistrationValidatorServlet extends HttpServlet {
     }
     
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// Determines the current step of registration.
 		int segment = Integer.valueOf(request.getParameter("validate"));
 		PrintWriter out = response.getWriter();
+		// Data to be returned in JSON format
 		response.setContentType("application/json");
 		switch(segment) {
+			// Refers to City and Full Name validation.
 			case 0:
 				String city = request.getParameter("city");
 				int districtCount = City.valueOf(city).getDistrictCount();
@@ -44,6 +47,7 @@ public class RegistrationValidatorServlet extends HttpServlet {
 					out.flush();
 				}
 				break;
+			// Validation for birthday, password, email, and phone number.
 			case 1:
 				boolean validBirthday = validateBirthday(request);
 				boolean validPassword = validatePassword(request);
@@ -55,6 +59,8 @@ public class RegistrationValidatorServlet extends HttpServlet {
 		}
 	}
 	
+	
+	// Checks if name fields are blank.
 	private boolean validateName(HttpServletRequest req) {
 		String fName = req.getParameter("fname").strip();
 		String mName = req.getParameter("mname").strip();
@@ -62,10 +68,18 @@ public class RegistrationValidatorServlet extends HttpServlet {
 		return fName.length() > 0 && mName.length() > 0 && lName.length() > 0;
 	}
 	
+	/*
+	 * Ensures current date is not beyond current date.
+	 * Also checks if the user is 18 years old and above.
+	 */
 	private boolean validateBirthday(HttpServletRequest req) {
 		if (req.getParameter("bday").equals("") || req.getParameter("bday") == null) {
 			return false;
 		}
+		/*
+		 * One line implementation of parsing string representation of birthday ("YYYY-MM-DD") to individual 
+		 * integer values {year, month, day}
+		 */
 		int[] date = Stream.of(req.getParameter("bday").split("-")).mapToInt((x) -> Integer.valueOf(x)).toArray();
 		LocalDate birthday = LocalDate.of(date[0], date[1], date[2]);
 		int age = LocalDate.now().getYear() - birthday.getYear();
@@ -81,6 +95,7 @@ public class RegistrationValidatorServlet extends HttpServlet {
 		}
 	}
 	
+	// Ensures that input password is atleast 7 chars long and contains atleast 1 uppercase letter.
 	private boolean validatePassword(HttpServletRequest req) {
 		String pwd = req.getParameter("pwd");
 		String cnpwd = req.getParameter("cnpwd");
@@ -88,6 +103,7 @@ public class RegistrationValidatorServlet extends HttpServlet {
 		return (pwd.length() > 6 && pwd.equals(cnpwd) && ucase > 0);
 	}
 	
+	// Counts the number of uppercase letter in a given string.
 	private int countUppercase(String text) {
 		char[] temp = text.toCharArray();
 		int upperCount = 0;
@@ -97,6 +113,7 @@ public class RegistrationValidatorServlet extends HttpServlet {
 		return upperCount;
 	}
 	
+	// Ensures email is valid using RegEx
 	private boolean validateEmail(HttpServletRequest req) {
 		String email = req.getParameter("email");
 		if (email.equals("")) {
@@ -106,6 +123,7 @@ public class RegistrationValidatorServlet extends HttpServlet {
 		}
 	}
 	
+	// Ensures phone number is valid using RegEx
 	private boolean validatePhoneNum(HttpServletRequest req) {
 		String phoneNum = req.getParameter("phoneNum");
 		if (phoneNum.equals("")) {

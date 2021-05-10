@@ -1,87 +1,89 @@
+
 body {
-            height: 100vh;
-            background: #ddd !important;
-        }
+	font-family: 'Montserrat', sans-serif;
+    height: 100vh;
+    background: #ddd !important;
+}
 
-        .h1 {
-            color: #260383;
-        }
+.h1 {
+    color: #260383;
+}
 
-        .navbar {
-            background: #260383;
-        }
-        
-        .nav-link {
-            color: #fff !important;
-        }
+.navbar {
+    background: #260383;
+}
 
-        .nav-link:hover {
-            box-shadow: 0 0 0 0.5px #fff inset;
-            transition: all 50ms ease-in-out;
-        }
+.nav-link {
+    color: #fff !important;
+}
 
-        .sign-out:hover {
-            background: #F92658;
-            box-shadow: none;
-            color: #fff;
-        }
+.nav-link:hover {
+    box-shadow: 0 0 0 0.5px #fff inset;
+    transition: all 50ms ease-in-out;
+}
 
-        .active {
-            background: #fff !important;
-            color: #260383 !important;
-            font-weight: bold;
-        }
+.sign-out:hover {
+    background: #F92658;
+    box-shadow: none;
+    color: #fff;
+}
 
-        .btn {
-            background: #260383;
-            color: #fff;
-            font-weight: bold;
-        }
+.active {
+    background: #fff !important;
+    color: #260383 !important;
+    font-weight: bold;
+}
 
-        .content-title {
-            background: #260383;
-            color: #fff;
-        }
+.btn {
+    background: #260383;
+    color: #fff;
+    font-weight: bold;
+}
 
-        .rad {
-            background: none !important;
-            color: #260383;
-            border: 1px solid #260383;
-        }
+.content-title {
+    background: #260383;
+    color: #fff;
+}
 
-        .rad:hover {
-            border: 1px solid;
-            background: #260383 !important;
-            color: #fff;
-        }
+.rad {
+    background: none !important;
+    color: #260383;
+    border: 1px solid #260383;
+}
 
-        .card-img-top {
-            height: 250px !important;
-        }
+.rad:hover {
+    border: 1px solid;
+    background: #260383 !important;
+    color: #fff;
+}
 
-        .selected {
-            border: 1px solid;
-            background: #260383 !important;
-            color: #fff;
-        }
+.card-img-top {
+    height: 250px !important;
+}
 
-        .overlay {
-            position: absolute;
-            background-color: #ccc;
-            height: 100%;
-            width: 100%;
-            top: 0;
-            bottom: 0;
-            opacity: 0.75;
-            z-index: 100000;
-            display: flex;
-            justify-content: center;
-        }
+.selected {
+    border: 1px solid;
+    background: #260383 !important;
+    color: #fff;
+}
 
-        .content-box {
-            -ms-overflow-style: none;  
-            scrollbar-width: none;  
-        }
-        .content-box::-webkit-scrollbar { 
-            display: none;  
-        }
+.overlay {
+    position: absolute;
+    background-color: #ccc;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    bottom: 0;
+    opacity: 0.75;
+    z-index: 100000;
+    display: flex;
+    justify-content: center;
+}
+
+.content-frame {
+    -ms-overflow-style: none;  
+    scrollbar-width: none;  
+}
+.content-frame::-webkit-scrollbar { 
+    display: none;  
+}

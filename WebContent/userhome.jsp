@@ -11,7 +11,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<jsp:include page="css/head-components.jsp" />
-	<link rel="stylesheet" type="text/css" href="css/userhome.css">
+	<link rel="stylesheet" href="css/userhome.css" />
 	<title>Vote</title>
 </head>
 <body>
@@ -43,7 +43,7 @@
 				</ul>
 			</div>
 		</nav>
-		<div class="container flex-grow-1 overflow-auto mh-100 content-box">
+		<div class="container flex-grow-1 overflow-auto mh-100 content-frame">
 			<div class="row">
 				<div
 					class="content-title col-md-12 py-3 mb-md-3 sticky-top d-none d-md-block">
@@ -52,19 +52,14 @@
 					</h4>
 				</div>
 			</div>
-			<div class="row h-75 p-6">
-				<!-- <div class="col-md-12 d-flex justify-content-center h-100">
-					<button class="btn btn-lg align-self-center">Start Voting</button>
-				</div> 
-				<div class="col-md-12 d-flex justify-content-center h-100">
-					<div class="spinner-border align-self-center" role="status"></div>
-				</div> -->
-				<div class="col-md-12 d-flex justify-content-center h-100">
-					<h4 class="align-self-center text-secondary">There are no
-						ongoing elections.</h4>
-				</div>
+			<div class="content-box row h-75 p-6">
 			</div>
 		</div>
 	</div>
+	<jsp:include page="js/core-scripts.jsp" />
+	<script type="text/javascript">
+		const userID = "<%= user.getUserID() %>";
+	</script>
+	<script type="text/javascript" src="js/userhome.js"></script>
 </body>
 </html>

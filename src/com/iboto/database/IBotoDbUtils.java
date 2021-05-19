@@ -1,16 +1,25 @@
 package com.iboto.database;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletContext;
 
 import com.iboto.constants.City;
+import com.iboto.models.CityElectionCandidates;
+import com.iboto.models.Election;
+import com.iboto.models.ElectionPoll;
 import com.iboto.models.UserBean;
+import com.iboto.models.UserVoteSummary;
+import com.iboto.models.UserVotes;
+import com.iboto.models.VotedCityElectionCandidates;
 import com.thiam.encryption.HashUtils;
 
 public class IBotoDbUtils {
@@ -139,7 +148,7 @@ public class IBotoDbUtils {
 				disconnect();
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.out.println("Error!");
 			return false;
 		}
 		return HashUtils.validateText(pwd[0], password, pwd[1]);
@@ -200,5 +209,211 @@ public class IBotoDbUtils {
 			return true;
 		}
 		return false;
+	}
+	
+	public List<Election> getElections(City city) {
+		List<Election> elections = new ArrayList<>();
+		try {
+			if (connect()) {
+				PreparedStatement ps = conn.prepareStatement("SELECT * FROM election WHERE City = ?");
+				ps.setString(1, city.getProperName());
+				ResultSet res = ps.executeQuery();
+				while (res.next()) {
+					String id = res.getString(1);
+					String name = res.getString(2);
+					String cityAddress = res.getString(3);
+					Date dateStart = res.getDate(4);
+					Date dateEnd = res.getDate(5);
+					elections.add(new Election(id, name, cityAddress, dateStart, dateEnd));
+				}
+				disconnect();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return elections;
+	}
+	
+	public CityElectionCandidates getCandidates(String electionID, int district, int councilorCount) {
+		CityElectionCandidates candidates = null;
+		try {
+			if (connect()) {
+				PreparedStatement ps = conn.prepareStatement("SELECT * FROM candidate WHERE ElectionID = ?");
+				ps.setString(1, electionID);
+				candidates = CityElectionCandidates.loadFromDatabase(ps.executeQuery(), district, councilorCount);
+				disconnect();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		getPlatforms(electionID, candidates);
+		return candidates;
+	}
+	
+	private void getPlatforms(String electionID, CityElectionCandidates candidates) {
+		try {
+			if (connect()) {
+				String sql = "SELECT * FROM evotingdb.platform " + 
+							 "WHERE CandidateID " + 
+							 "IN (SELECT CandidateID FROM evotingdb.candidate WHERE ElectionID = ?);";
+				PreparedStatement ps = conn.prepareStatement(sql);
+				ps.setString(1, electionID);
+				ResultSet platforms = ps.executeQuery();
+				CityElectionCandidates.loadPlatforms(candidates.getMayorCandidates(),
+													 candidates.getViceMayorCandidates(),
+													 candidates.getCouncilorCandidates(),
+													 platforms);
+				disconnect();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public Date getVoted(String userID, String electionID) {
+		Date dateVoted = null;
+		try {
+			if (connect()) {
+				PreparedStatement ps = conn.prepareStatement("SELECT * FROM vote WHERE VoterID = ? AND ElectionID = ?");
+				ps.setString(1, userID);
+				ps.setString(2, electionID);
+				ResultSet res = ps.executeQuery();
+				
+				if (res.next()) {
+					dateVoted = res.getDate("DateVoted");
+				}
+				disconnect();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dateVoted;
+	}
+	
+	public String castVote(List<String> candidateIDs, String electionID, String userID) {
+		try {
+			String voteID = addVote(userID, electionID);
+			if (connect()) {
+				PreparedStatement ps = conn.prepareStatement("INSERT INTO votedcandidate VALUES (?, ?)");
+				candidateIDs.forEach((id) -> {
+					try {
+						ps.setString(1, voteID);
+						ps.setString(2, id);
+						ps.execute();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				});
+				disconnect();
+				return voteID;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	private String addVote(String userID, String electionID) {
+		String voteID = userID.substring(10) + electionID + LocalDate.now().toString().replace("-", "");
+		try {
+			if (connect()) {
+				PreparedStatement ps = conn.prepareStatement("INSERT INTO vote VALUES (?, ?, ?, ?, ?)");
+				ps.setString(1, voteID);
+				ps.setString(2, userID);
+				ps.setString(3, electionID);
+				ps.setInt(4, 1);
+				ps.setString(5, LocalDate.now().toString());
+				ps.execute();
+				disconnect();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return voteID;
+	}
+	
+	public UserVotes getUserVotes(String userID) {
+		UserVotes userVotes = null;
+		try {
+			if (connect()) {
+				String sql = "SELECT VoteId, VoterID, DateVoted, election.ElectionID, election.ElectionName " + 
+							 "FROM vote " + 
+							 "JOIN election ON vote.electionID = election.ElectionID " + 
+							 "WHERE VoterID = ?";
+				PreparedStatement ps = conn.prepareStatement(sql);
+				ps.setString(1,  userID);
+				ResultSet res = ps.executeQuery();
+				userVotes = UserVotes.loadFromDatabase(res, userID);
+				disconnect();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return userVotes;
+	}
+	
+	public VotedCityElectionCandidates getVotedCandidates(String voteID) {
+		VotedCityElectionCandidates votedCandidates = null;
+		try {
+			if (connect()) {
+				String sql = "SELECT VoteID, votedcandidate.CandidateID, candidate.CandidateID, candidate.CandidateName, candidate.District, candidate.Position " + 
+							 "FROM votedcandidate " + 
+							 "JOIN candidate ON votedcandidate.CandidateID = candidate.CandidateID " + 
+							 "WHERE VoteID = ?";
+				PreparedStatement ps = conn.prepareStatement(sql);
+				ps.setString(1, voteID);
+				votedCandidates = VotedCityElectionCandidates.loadFromDatabase(ps.executeQuery());
+				disconnect();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return votedCandidates;
+	}
+	
+	public UserVoteSummary getVoteSummary(String voteID) {
+		UserVoteSummary voteSummary = null;
+		try {
+			if (connect()) {
+				String sql = "SELECT VoteId, VoterID, DateVoted, election.ElectionID, election.ElectionName " + 
+							 "FROM vote " + 
+							 "JOIN election ON vote.ElectionID = election.ElectionID " + 
+							 "WHERE VoteID = ?";
+				PreparedStatement ps = conn.prepareStatement(sql);
+				ps.setString(1,  voteID);
+				ResultSet res = ps.executeQuery();
+				res.next();
+				String userID = res.getString("VoterID");
+				String electionID = res.getString("ElectionID");
+				String electionName = res.getString("ElectionName");
+				Date dateVoted = res.getDate("DateVoted");
+				voteSummary = new UserVoteSummary(userID, electionID, voteID, electionName, dateVoted);
+				disconnect();				
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return voteSummary;
+	}
+	
+	public ElectionPoll getElectionPoll(String electionID) {
+		ElectionPoll electionPoll = null;
+		try {
+			if (connect()) {
+				String sql = "SELECT candidate.candidatename, candidate.candidateid, candidate.position, COUNT(votedcandidate.CandidateID) as Poll " + 
+							 "FROM candidate " + 
+							 "LEFT JOIN votedcandidate ON votedcandidate.CandidateID = candidate.CandidateID " + 
+							 "WHERE candidate.ElectionID = ? " + 
+							 "GROUP BY candidate.candidateid " + 
+							 "ORDER BY Poll DESC";
+				PreparedStatement ps = conn.prepareStatement(sql);
+				ps.setString(1, electionID);
+				electionPoll = ElectionPoll.loadFromDatabase(electionID, ps.executeQuery());
+				disconnect();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return electionPoll;
 	}
 }

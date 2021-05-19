@@ -23,7 +23,7 @@
 <body>
 	<div class="container mt-3 px-4 px-md-0">
         <div class="row my-4">
-            <h3>Logo</h3>
+            <img class="logo" src="assets/logo.png" />
         </div>
         <div class="row px-0 px-md-3">
             <div class="col-12 col-md-6 my-2 my-md-0">

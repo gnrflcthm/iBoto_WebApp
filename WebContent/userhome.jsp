@@ -17,10 +17,10 @@
 <body>
 	<div
 		class="d-flex flex-column h-100 flex-md-row justify-content-between">
-		<nav
-			class="navbar navbar-expand-md navbar-dark flex-sm-row flex-md-column px-3 py-0 p-md-0 col-md-3 sticky-top">
-			<a href="#"
-				class="text-center h1 text-decoration-none d-none d-md-block text-white mt-3 mb-4 align-self-stretch"><b>Logo</b></a>
+		<nav class="navbar navbar-expand-md navbar-dark flex-sm-row flex-md-column px-3 py-0 p-md-0 col-md-3 sticky-top">
+			<a href="home" class="text-center h1 text-decoration-none d-none d-md-block text-white mt-3 mb-2 align-self-stretch">
+				<img src="assets/logowhite.png" class="logo" />
+			</a>
 			<h4 class="text-center text-white d-sm-block d-md-none py-3">
 				<b>Vote</b>
 			</h4>
@@ -34,25 +34,25 @@
 				class="collapse navbar-collapse align-items-start mt-md-3 col-md-8"
 				id="navItems">
 				<ul class="nav nav-pills text-center d-flex flex-column w-100">
-					<li class="nav-item pb-3 text-white"><a href="#"
+					<li class="nav-item pb-3 text-white"><a href="home"
 						class="nav-link active">Vote</a></li>
-					<li class="nav-item pb-3"><a href="results.html"
+					<li class="nav-item pb-3"><a href="results"
 						class="nav-link">Results</a></li>
-					<li class="nav-item pb-3"><a href="home.html"
+					<li class="nav-item pb-3"><a href="signout"
 						class="nav-link sign-out">Sign Out</a></li>
 				</ul>
 			</div>
 		</nav>
-		<div class="container flex-grow-1 overflow-auto mh-100 content-frame">
+		<div class="container flex-grow-1 d-flex flex-column overflow-auto mh-100 content-frame">
 			<div class="row">
-				<div
-					class="content-title col-md-12 py-3 mb-md-3 sticky-top d-none d-md-block">
+				<div class="content-title col-md-12 py-3 sticky-top d-none d-md-block position-relative">
 					<h4 class="text-center">
-						<b>Vote</b>
+						<b></b>
 					</h4>
 				</div>
 			</div>
-			<div class="content-box row h-75 p-6">
+			<div class="content-box position-relative row h-75 p-6 pt-3 flex-grow-1">
+				
 			</div>
 		</div>
 	</div>

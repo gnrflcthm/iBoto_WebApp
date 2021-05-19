@@ -18,11 +18,11 @@ public class VotedCityElectionCandidates {
 		this.councilorCandidates = councilorCandidates;
 	}
 	
-	public MayorCandidate getMayorCandidates() {
+	public MayorCandidate getMayorCandidate() {
 		return mayor;
 	}
 
-	public ViceMayorCandidate getViceMayorCandidates() {
+	public ViceMayorCandidate getViceMayorCandidate() {
 		return viceMayor;
 	}
 

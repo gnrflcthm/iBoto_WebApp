@@ -31,8 +31,7 @@ public class HomeServlet extends HttpServlet {
 			rd.forward(request, response);
 		} else {
 			// If session exists,
-			UserBean userBean = (UserBean) session.getAttribute("userBean");
-			if (userBean == null) {
+			if (session.getAttribute("userBean") == null) {
 				// If userBean attribute is null (meaning there is no logged in user), return to home page.
 				rd = request.getRequestDispatcher("home.jsp");
 				rd.forward(request, response);
@@ -41,6 +40,7 @@ public class HomeServlet extends HttpServlet {
 				rd = request.getRequestDispatcher("userhome.jsp");
 				rd.forward(request, response);
 			}
+			
 		}
 	}
 

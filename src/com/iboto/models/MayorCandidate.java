@@ -10,6 +10,10 @@ public class MayorCandidate extends Candidate {
 		super(id, name);
 	}
 	
+	public MayorCandidate(String id, String name, int voteCount) {
+		super(id, name, voteCount);
+	}
+	
 	public MayorCandidate(String id, String name, List<Platform> platforms) {
 		super(id ,name, platforms);
 	}

@@ -1,5 +1,7 @@
 package com.iboto.models;
 
+import java.util.List;
+
 public class MayorCandidate extends Candidate {
 	
 	public static final String POSITION = "MAYOR";
@@ -8,7 +10,7 @@ public class MayorCandidate extends Candidate {
 		super(id, name);
 	}
 	
-	public MayorCandidate(String id, String name, Platform[] platforms) {
+	public MayorCandidate(String id, String name, List<Platform> platforms) {
 		super(id ,name, platforms);
 	}
 }

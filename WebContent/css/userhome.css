@@ -87,3 +87,49 @@ body {
 .content-frame::-webkit-scrollbar { 
     display: none;  
 }
+
+.election-card {
+	cursor: pointer;
+	transition: all 0.1s linear;
+}
+
+.election-card:hover {
+	background: #260383;
+	color: white;
+}
+
+.loading {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	background: rgba(200, 200, 200, 0.8);
+}
+
+.full {
+	color: #bbb !important;
+	border: #bbb !important;
+}
+
+.full:hover {
+	background: none !important;
+	cursor: default;	
+}
+
+.return {
+    left: 1rem !important;
+    top: 1.35rem;
+    color: #fff;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+    transition: 0.2s all linear;
+}
+
+.return:hover {
+    color: #4605fa !important;
+}
+
+.logo {
+	width: 75%;
+}

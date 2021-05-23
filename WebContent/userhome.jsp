@@ -15,34 +15,8 @@
 	<title>Vote</title>
 </head>
 <body>
-	<div
-		class="d-flex flex-column h-100 flex-md-row justify-content-between">
-		<nav class="navbar navbar-expand-md navbar-dark flex-sm-row flex-md-column px-3 py-0 p-md-0 col-md-3 sticky-top">
-			<a href="home" class="text-center h1 text-decoration-none d-none d-md-block text-white mt-3 mb-2 align-self-stretch">
-				<img src="assets/logowhite.png" class="logo" />
-			</a>
-			<h4 class="text-center text-white d-sm-block d-md-none py-3">
-				<b>Vote</b>
-			</h4>
-			<button class="navbar-toggler" type="button"
-				data-bs-toggle="collapse" data-bs-target="#navItems"
-				aria-controls="navItems" aria-expanded="false"
-				aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div
-				class="collapse navbar-collapse align-items-start mt-md-3 col-md-8"
-				id="navItems">
-				<ul class="nav nav-pills text-center d-flex flex-column w-100">
-					<li class="nav-item pb-3 text-white"><a href="home"
-						class="nav-link active">Vote</a></li>
-					<li class="nav-item pb-3"><a href="results"
-						class="nav-link">Results</a></li>
-					<li class="nav-item pb-3"><a href="signout"
-						class="nav-link sign-out">Sign Out</a></li>
-				</ul>
-			</div>
-		</nav>
+	<div class="d-flex flex-column h-100 flex-md-row justify-content-between">
+		<jsp:include page="navigation.jsp" />
 		<div class="container flex-grow-1 d-flex flex-column overflow-auto mh-100 content-frame">
 			<div class="row">
 				<div class="content-title col-md-12 py-3 sticky-top d-none d-md-block position-relative">

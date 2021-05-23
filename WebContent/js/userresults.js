@@ -10,6 +10,8 @@ const backArrow = `
 
 
 $(document).ready(function() {
+	$("nav h4.mobile-title b").text("Results");
+	$("#navItems ul li .re").addClass("active");
 	const contentBox = $(".content-box");
 	init(contentBox);
 	$(".content-title").on("click", ".return", function() {
@@ -46,8 +48,12 @@ function loadVotedElections(container, data) {
 						<a class="link-primary align-self-center download-res" target="_blank" href="results?refNum=${data[i]['referenceNumber']}">Save a Copy</a> 
 					</div>
 					<div class="card-body d-flex justify-content-between">
-						<p class="card-text">Reference Number: <b>${data[i]['referenceNumber']}</b></p>
-						<p class="card-text">Date Voted: <b>${data[i]['dateVoted']}</b></p>
+						<div class="row w-100">
+							<p class="card-text col-12 col-md-3">Reference Number:</p>
+							<p class="card-text col-12 col-md-4"><b>${data[i]['referenceNumber']}</b></p>
+							<p class="card-text col-12 col-md-3">Date Voted:</p>
+							<p class="card-text col-12 col-md-2"><b>${data[i]['dateVoted']}</b></p>
+						</div>
 					</div>
 					<div class="collapse" id="summ${data[i]['referenceNumber']}">
 						<div class="card">
@@ -82,7 +88,7 @@ function loadVotedElections(container, data) {
 					names.append(`<h5>${cands['councilorCandidates'][i]['name']}</h5>`)
 				}
 				names.append(`
-					<button class="btn mt-4 election-poll" data-id="${data[i]['electionID']}" data-name="${data[i]['electionName']}">See Current Standings</button>
+					<button class="btn mt-4 election-poll d-block d-md-inline col-12 col-md-6" data-id="${data[i]['electionID']}" data-name="${data[i]['electionName']}">See Current Standings</button>
 				`);
 			}
 		});

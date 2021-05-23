@@ -26,6 +26,8 @@ const backArrow = `
 const vote = {"mayor": {}, "viceMayor": {}, "councilors": []}
 
 $(document).ready(function() {
+	$("nav h4.mobile-title b").text("Vote");
+	$("#navItems ul li .ac").addClass("active");
 	const contentBox = $(".content-box");
 	var electionID = ""
 	initialize(contentBox, userID);
@@ -48,7 +50,7 @@ $(document).ready(function() {
 					contentBox.append(`
 						<div class="col-12 justify-self-center">
 							<div class="card">
-								<div class="card-body d-flex justify-content-between">
+								<div class="card-body d-md-flex justify-content-between">
 									<h4 class="card-title">You Have Already Voted</h4>
 									<p class="card-text">Date Voted: ${data['dateVoted']}</p>
 								</div>
@@ -62,6 +64,7 @@ $(document).ready(function() {
 				let title = election.find("h4").text();
 				$(".content-title h4 b").text(title);
 				$(".content-title").prepend(backArrow);
+				$("nav h4.mobile-title").text(title);
 			}
 		});
 	});
@@ -120,10 +123,10 @@ function loadCandidates(data, container, electionID, userID) {
 	var maxCouncilors = data['councilorCount'];
 	content.append(`
 			<div class="row p-6 my-3">
-				<div class="col-3"><button class="candidate-tab btn h-100 w-100 m active" data-target="m-candidates">Mayor</button></div>
-				<div class="col-3"><button class="candidate-tab btn h-100 w-100 vm disabled" data-target="vm-candidates">Vice Mayor</button></div>
-				<div class="col-3"><button class="candidate-tab btn h-100 w-100 spc disabled" data-target="spc-candidates">Councilor</button></div>
-				<div class="col-3"><button class="candidate-tab btn h-100 w-100 sub disabled" data-target="submit">Submit</button></div>
+				<div class="col-12 col-md-3 my-1 my md-0"><button class="candidate-tab btn h-100 w-100 m active" data-target="m-candidates">Mayor</button></div>
+				<div class="col-12 col-md-3 my-1 my md-0"><button class="candidate-tab btn h-100 w-100 vm disabled" data-target="vm-candidates">Vice Mayor</button></div>
+				<div class="col-12 col-md-3 my-1 my md-0"><button class="candidate-tab btn h-100 w-100 spc disabled" data-target="spc-candidates">Councilor</button></div>
+				<div class="col-12 col-md-3 my-1 my md-0"><button class="candidate-tab btn h-100 w-100 sub disabled" data-target="submit">Submit</button></div>
 			</div>
 	`);
 	
@@ -146,7 +149,7 @@ function loadCandidates(data, container, electionID, userID) {
 	var completeVote = $('<div class="row p-6 mb-3 submit justify-content-center section-tab"></div>');
 	completeVote.hide();
 	completeVote.append(`
-		<div class="col-6">
+		<div class="col-12 col-md-6">
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">Summary of Vote</h4>
@@ -237,7 +240,7 @@ function loadCandidates(data, container, electionID, userID) {
 					container.empty();
 					container.append(`
 						<div class="col-12 d-flex justify-content-center h-100">
-							<div class="col-8">
+							<div class="col-12 col-md-8">
 								<div class="card">
 									<div class="card-body">
 										<h4 class="card-title"><b>Thank You For Voting!</b></h4>
@@ -289,7 +292,7 @@ function updateVote(container) {
 
 function loadMayorCard(container, data) {
 	container.append(`
-		<div class="col-12 col-md-6 my-3 m-candidate">
+		<div class="col-12 col-md-6 my-1 my-md-3 m-candidate">
 			<div class="card">
 				<div class="card-body">
 					<h4 class="card-title">${data['name']}</h4>
@@ -326,7 +329,7 @@ function loadMayorCard(container, data) {
 
 function loadViceMayorCard(container, data) {
 	container.append(`
-		<div class="col-12 col-md-6 my-3 vm-candidate">
+		<div class="col-12 col-md-6 my-1 my-md-3 vm-candidate">
 			<div class="card">
 				<div class="card-body">
 					<h4 class="card-title">${data['name']}</h4>
@@ -363,7 +366,7 @@ function loadViceMayorCard(container, data) {
 
 function loadCouncilorCard(container, data) {
 	container.append(`
-		<div class="col-12 col-md-6 my-3 spc-candidate">
+		<div class="col-12 col-md-6 my-1 my-md-3 spc-candidate">
 			<div class="card">
 				<div class="card-body">
 					<h4 class="card-title">${data['name']}</h4>

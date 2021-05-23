@@ -6,7 +6,7 @@ $(document).ready(function() {
     $(".complete-registration").hide();
     $("#city-select").change(function() {
         if (!citySelect) {
-            $(".name").show(500);
+            $(".name").slideDown(250);
             citySelect = true;
         } else {
         	resetForm();
@@ -28,8 +28,8 @@ $(document).ready(function() {
         		if (res['valid']) {
         			$(".name-field").prop("readonly", true);
         			$(".name-field").addClass("is-valid");
-        			$("#validate").hide(500);
-        			$(".complete-registration").show(500);
+        			$("#validate").slideUp(250);
+        			$(".complete-registration").slideDown(250);
         			var district = $("#district-select");
         			district.empty();
         			for (let i = 0; i <= res["district_count"]; i++) {
@@ -125,5 +125,5 @@ function resetForm() {
 	$("input[type=date]").prop("readonly", false);
 	$("input[type=date]").removeClass("is-valid");
 	$("input[type=date]").removeClass("is-invalid");
-	$(".complete-registration").hide(500);
+	$(".complete-registration").slideUp(250);
 }

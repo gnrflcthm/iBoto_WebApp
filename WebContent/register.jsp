@@ -12,14 +12,17 @@
 </head>
 <body>
 	<div class="container mt-3 px-4 px-md-0">
+		<div class="row">
+		<div class="col-md-2"></div>
+        	<div class="col-12 col-md-2">
+	            <img class="logo" src="assets/logo.png" />
+        	</div>
+        </div>
         <div class="row px-0 px-md-3 justify-content-center">
             <div class="col-md-2"></div>
             <div class="col-md-8 align-self-center">
                 <div class="card mb-4">
                     <div class="card-body">
-                        <div class="card-title mb-2">
-                            <h3>Logo</h3>
-                        </div>
                         <form action="${pageContext.request.contextPath}/register" method="POST" id="regForm" accept-charset="utf-8">
                             <div class="row">
                                 <div class="col">
@@ -43,7 +46,7 @@
                                         
                                     </select>
                                 </div>
-                                <div class="col name">
+                                <div class="col-12 col-md-6 name mt-3 mt-md-0">
                                     <div class="card-title mb-2">Enter Your Name</div>
                                     <input type="text" name="fname" id="fname" class="name-field form-control mb-3" placeholder="First Name" autocomplete="off" required />
                                     <input type="text" name="mname" id="mname" class="name-field form-control mb-3" placeholder="Middle Name" autocomplete="off" required />
@@ -66,11 +69,11 @@
                                 </div>
                             </div>
                             <div class="row complete-registration">
-                                <div class="col">
+                                <div class="col-12 col-md-6">
                                     <div class="card-title my-3">Enter Your Email(Optional)</div>
                                     <input type="email" name="email" id="email" class="form-control" placeholder="Email" autocomplete="off" />
                                 </div>
-                                <div class="col">
+                                <div class="col-12 col-md-6">
                                     <div class="card-title my-3">Enter Your Phone Number(Optional)</div>
                                     <input type="text" name="phoneNum" id="phoneNum" class="form-control my-3" placeholder="Phone Number" autocomplete="off" />
                                 </div>
@@ -82,6 +85,7 @@
             </div>
             <div class="col-md-2"></div>
         </div>
+       </div>
 	<jsp:include page="js/core-scripts.jsp" />
 	<script src="js/reg.js"></script>
 </body>

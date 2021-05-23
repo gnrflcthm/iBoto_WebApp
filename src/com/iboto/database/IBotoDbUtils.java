@@ -416,4 +416,21 @@ public class IBotoDbUtils {
 		}
 		return electionPoll;
 	}
+
+	public void updatePassword(String userID, String npw) {
+		try {
+			if (connect()) {
+				String sql = "UPDATE voter SET UPassword = ?, Password_Salt = ? WHERE UserID = ?";
+				String[] pwd = HashUtils.hash(npw);
+				PreparedStatement ps = conn.prepareStatement(sql);
+				ps.setString(1, pwd[0]);
+				ps.setString(2, pwd[1]);
+				ps.setString(3, userID);
+				ps.executeUpdate();
+				disconnect();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

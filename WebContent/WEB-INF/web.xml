@@ -2,11 +2,38 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
   <display-name>iBoto WebApplication</display-name>
   <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
-    <welcome-file>index.htm</welcome-file>
-    <welcome-file>index.jsp</welcome-file>
-    <welcome-file>default.html</welcome-file>
-    <welcome-file>default.htm</welcome-file>
-    <welcome-file>default.jsp</welcome-file>
+    <welcome-file>home.jsp</welcome-file>
   </welcome-file-list>
+  <context-param>
+  	<param-name>user</param-name>
+	<param-value>root</param-value>
+  </context-param>
+  <context-param>
+  	<param-name>password</param-name>
+	<param-value>123456</param-value>
+  </context-param>
+  <context-param>
+  	<param-name>driver</param-name>
+	<param-value>com.mysql.cj.jdbc.Driver</param-value>
+  </context-param>
+  <servlet>
+  	<servlet-name>RegisterServlet</servlet-name>
+  	<servlet-class>com.iboto.servlet.RegisterServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>LoginValidatorServlet</servlet-name>
+  	<servlet-class>com.iboto.servlet.LoginValidatorServlet</servlet-class>
+  </servlet>
+  <servlet>
+	<servlet-name>HomeServlet</servlet-name>
+	<servlet-class>com.iboto.servlet.HomeServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>RegisterServlet</servlet-name>
+  	<url-pattern>/register</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>HomeServlet</servlet-name>
+  	<url-pattern>/home</url-pattern>
+  </servlet-mapping>
 </web-app>

@@ -13,7 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/signout")
 public class SignOutServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+    
+	// Signs out the user
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.getSession().invalidate();
 		response.sendRedirect("home");

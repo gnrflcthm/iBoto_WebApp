@@ -20,9 +20,6 @@ import com.iboto.constants.City;
 public class RegistrationValidatorServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
     public RegistrationValidatorServlet() {
         super();
         // TODO Auto-generated constructor stub

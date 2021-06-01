@@ -25,11 +25,13 @@ public class UserServiceServlet extends HttpServlet {
 	private IBotoDbUtils db;
 	private Gson gson;
 	
+	// Initializes needed classes
 	public void init() {
 		this.db = new IBotoDbUtils(this.getServletContext());
 		this.gson = new Gson();
 	}
-
+	
+	// Handles the request and calls the specific method needed
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String service = request.getParameter("service");
 		switch(service) {
@@ -48,6 +50,7 @@ public class UserServiceServlet extends HttpServlet {
 		}
 	}
 	
+	// Returns Available elections
 	private void loadElections(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
 		response.setContentType("application/json");
@@ -56,6 +59,7 @@ public class UserServiceServlet extends HttpServlet {
 		out.flush();
 	}
 	
+	// Checks if the users has already voted on an election
 	private void hasVoted(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
 		response.setContentType("application/json");
@@ -70,6 +74,7 @@ public class UserServiceServlet extends HttpServlet {
 		out.flush();
 	}
 	
+	// Loads the candidates for an election so that the user can proceed to voting
 	private void loadCandidates(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
 		response.setContentType("application/json");
@@ -82,6 +87,7 @@ public class UserServiceServlet extends HttpServlet {
 		out.flush();
 	}
 	
+	// Submits the vote and adds it to the database.
 	private void submitVote(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
 		response.setContentType("application/json");

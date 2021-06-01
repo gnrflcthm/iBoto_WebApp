@@ -29,15 +29,17 @@ public class ResultsServlet extends HttpServlet {
 	private IBotoDbUtils db;
 	private Gson gson;
 	
+	// Initialized necessary classes.
     public void init() {
     	db = new IBotoDbUtils(this.getServletContext());
     	gson = new Gson();
     }
-
-
+    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		RequestDispatcher rd;
+		
+		// Forwards user to home if a there is no user logged in in the session.
 		if (session.getAttribute("userBean") == null) {
 			response.sendRedirect("home");
 		} else {
@@ -50,7 +52,8 @@ public class ResultsServlet extends HttpServlet {
 			}
 		}
 	}
-
+	
+	// Determines what service is requested and calls the specific method accordingly
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String service = request.getParameter("service");
 		switch(service) {
@@ -65,6 +68,7 @@ public class ResultsServlet extends HttpServlet {
 		}
 	}
 	
+	// Returns data containing all the elections that the user has participated in
 	private void getElections(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String userID = request.getParameter("uid");
 		PrintWriter out = response.getWriter();
@@ -73,6 +77,7 @@ public class ResultsServlet extends HttpServlet {
 		out.flush();
 	}
 	
+	// Returns the data containing the users voted candidates for the given election.
 	private void getCandidates(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String voteID = request.getParameter("voteID");
 		PrintWriter out = response.getWriter();
@@ -81,6 +86,7 @@ public class ResultsServlet extends HttpServlet {
 		out.flush();
 	}
 	
+	// Makes the servlet return a pdf file allowing the user to download his/her vote summary
 	private void downloadVoteSummary(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String referenceNumber = request.getParameter("refNum");
 		UserBean user = (UserBean) request.getSession().getAttribute("userBean");
@@ -115,6 +121,7 @@ public class ResultsServlet extends HttpServlet {
         downloadFile.delete();
 	}
 	
+	// Returns the data containing the vote poll for the selected election
 	private void getElectionPoll(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String electionId = request.getParameter("electionID");
 		PrintWriter out = response.getWriter();

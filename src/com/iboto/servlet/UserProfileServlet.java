@@ -24,7 +24,8 @@ public class UserProfileServlet extends HttpServlet {
 	
 	private IBotoDbUtils db;
 	private Gson gson;
-       
+	
+	// Initializes necessary classes
 	@Override
 	public void init() throws ServletException {
 		db = new IBotoDbUtils(this.getServletContext());
@@ -41,7 +42,8 @@ public class UserProfileServlet extends HttpServlet {
 			rd.forward(request, response);
 		}
 	}
-
+	
+	// Handles the request and calls the method needed
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String service = request.getParameter("service");
 		HttpSession session = request.getSession(false);
@@ -50,10 +52,10 @@ public class UserProfileServlet extends HttpServlet {
 			case "password":
 				updatePassword(request, response);
 				break;
-		
 		}
 	}
-
+	
+	// Updates the users password
 	private void updatePassword(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		UserBean user = (UserBean) request.getSession(false).getAttribute("userBean");
 		String opw = request.getParameter("opw");
@@ -73,11 +75,13 @@ public class UserProfileServlet extends HttpServlet {
 		}
 	}
 	
+	// Checks if the entered password matches the repeat password and if it meets the minimum criteria
 	private boolean validatePassword(String p1, String p2) {
 		int ucase = countUppercase(p1);
 		return (p1.length() > 6 && p1.equals(p2) && ucase > 0);
 	}
 	
+	// Counts the number of uppercase characters
 	private int countUppercase(String text) {
 		char[] temp = text.toCharArray();
 		int upperCount = 0;

@@ -161,9 +161,10 @@ public class IBotoDbUtils {
 	 * @throws SQLException
 	 */
 	private String generateUserID(City city) throws SQLException {
-		ResultSet res = conn.createStatement().executeQuery("SELECT COUNT(*) FROM voter WHERE UserID LIKE '" + city.getCityCode() + "%'");
+		ResultSet res = conn.createStatement().executeQuery("SELECT UserID FROM voter WHERE UserID LIKE '" + city.getCityCode() + "%' ORDER BY UserID DESC LIMIT 1");
 		res.next();
-		int userCount = res.getInt(1);
+		String lastID = res.getString("UserID");
+		int userCount = Integer.valueOf(lastID.substring(10)) + 1;
 		if (res != null && !res.isClosed()) {
 			res.close();
 		}
